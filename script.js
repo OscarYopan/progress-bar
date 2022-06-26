@@ -1,7 +1,3 @@
-document.querySelector('.download-button').onclick = () => {
-  document.querySelector('.progress-button').classList.add('in-progress');
-}
-
 const simulateDownload = (progress) => {
   return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -11,10 +7,13 @@ const simulateDownload = (progress) => {
 };
 
 document.querySelector('.download-button').onclick = () => {
-  document.querySelector('.progress-button').classList.add('in-progress');
-
   const documentStyles = document.documentElement.style;
+  const progressButton = document.querySelector('.progress-button');
   const percentage = document.querySelector('.percentage');
+  const loadingText = document.querySelector('.loading-text');
+  const buttonText = document.querySelector('.button-text');
+
+  progressButton.classList.add('in-progress');
 
   (async () => {
       let progress = 0;
@@ -23,11 +22,14 @@ document.querySelector('.download-button').onclick = () => {
           progress = await simulateDownload(progress);
 
           if (progress % 5 === 0) {
+              loadingText.innerHTML = `Carregando${Array(progress % 4).fill('.').join('')}`;
               documentStyles.setProperty('--progress', `${progress}%`);
           }
 
           percentage.innerText = `${progress}%`;
       }
-  })();  
-}
 
+      buttonText.innerText = '🎉 Pronto!';
+      setTimeout(() => progressButton.classList.replace('in-progress', 'finished'), 1000);
+  })();
+}
