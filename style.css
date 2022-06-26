@@ -1,3 +1,7 @@
+:root {
+  --progress: 0%;
+}  
+
 html {
   background: lightblue;
   font-family: Arial, Helvetica, sans-serif;
@@ -30,4 +34,78 @@ html {
   opacity: 1;
   color: black;
   transition: all .6s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.loading-text,
+.percentage {
+    display: block;
+    color: blue;
+    font-size: 3.2rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    opacity: 0;
+    transition: all .6s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.in-progress .loading-text {
+  opacity: 1;
+  top: -55%;
+}
+
+.in-progress .percentage {
+  opacity: 1;
+  top: 155%;
+}
+
+.in-progress .button-text {
+  transform: translateY(-35px);
+  opacity: 0;
+}
+
+.download-button {
+  width: 15rem;
+  border-radius: 2.5rem;
+  border: 0;
+  padding: 1rem 4rem;
+  font-family: 'Lobster';
+  font-size: 2.1rem;
+  box-sizing: content-box;
+  cursor: pointer;
+  overflow: hidden;
+  transition: width .9s cubic-bezier(0.4, 0.0, 0.2, 1);
+  box-shadow: 0 5rem 1rem rgba(33, 33, 33, .25), inset 0 5rem 10rem rgba(33, 33, 33, .25);
+}
+
+.in-progress .download-button {
+  width: 30rem;
+}
+
+.download-button:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  background-image: linear-gradient(-45deg, #ffc2cc 25%, #ffb6c1 25%, #ffb6c1 50%, #ffc2cc 50%, #ffc2cc 75%, #ffb6c1 75%, #ffb6c1);
+  background-size: 5rem 5rem;
+  border-radius: 2.5rem;
+  transition: width .6s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.download-button:after {
+  width: 0%;
+  width: var(--progress);
+  color: #ffb6c1;
+}
+
+.finished .download-button {
+  background: #ffb6c1;
+}
+
+.finished .download-button:after {
+  opacity: 0;
 }
